@@ -1,0 +1,74 @@
+html,
+body {
+    margin: 0;
+    background-color: #fff;
+    color: #000;
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+}
+
+.clearfix {zoom: 1}
+.clearfix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    visibility: hidden;
+    height: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+/* ------------------------------------------------*/
+/* RESUSABLE COMPONENTS */
+/* ------------------------------------------------*/
+
+.row {
+    max-width: 850px;
+    margin: 0 auto 0 auto;
+}
+
+section {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* --------------- HEADINGS -------------- */
+
+h1, h2, h3 {
+    font-weight: 500;
+}
+
+h1 {
+    color: #fff;
+    font-size: 240%;
+    margin: 0 0 10px 0;
+    word-spacing: 4px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #530288;
+    font-size: 150%;
+    word-spacing: 2px;
+    margin: 15px 0 15px 0;
+    letter-spacing: 1px;
+}
+
+h3 {
+    font-size: 110%;
+    margin-bottom: 15px;
+}
