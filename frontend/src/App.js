@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Header from './Header/Header.js'
+import Signup from './Signup/Signup.js'
 
-function App() {
-  return (
-    <div className="App">
-      <h2>Welcome</h2>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Header />
+        <Signup />
+      </div>
+    );
+  }
 }
 
 export default App;
