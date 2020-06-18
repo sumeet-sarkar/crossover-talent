@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyparser.json());
 
 app.use(authRouter);
-app.use(employeeRouter);
+//app.use(employeeRouter);
 
 app.post('/add-mock-data', (req, res, next) => {
     fs.readFile(path.join(__dirname, 'test_data.txt'), (err, data) => {
