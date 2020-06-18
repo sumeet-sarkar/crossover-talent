@@ -5,6 +5,7 @@ const path = require('path');
 const getDb = require('./util/database').getDb;
 
 const authRouter = require('./routes/auth');
+const employeeRouter = require('./routes/employee');
 
 const mongoConnect = require('./util/database').mongoConnect;
 
@@ -13,6 +14,7 @@ const app = express();
 app.use(bodyparser.json());
 
 app.use(authRouter);
+app.use(employeeRouter);
 
 app.post('/add-mock-data', (req, res, next) => {
     fs.readFile(path.join(__dirname, 'test_data.txt'), (err, data) => {
