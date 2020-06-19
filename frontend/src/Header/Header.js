@@ -5,12 +5,6 @@ import './Header.css';
 
 class Header extends Component {
 
-    state = {
-        creds: [
-          { id: 'abc', username: "", password: ""}
-        ]
-      };
-
       state = {
         creds: [
           { email: "", password: ""}
@@ -24,7 +18,7 @@ class Header extends Component {
         }
         const creds = {email: this.state.creds.username,
                     password: this.state.creds.password}
-        if (status == true){
+        if (status === true){
             console.log("correct creds")
             axios.post('http://localhost:8080/login', creds, {headers: headers})
                 .then(response => {
@@ -33,8 +27,7 @@ class Header extends Component {
                 .catch(error => {
                     console.log(error)
                 }
-
-                )
+            )
         }
     }
 
@@ -54,19 +47,19 @@ class Header extends Component {
             statusPassword = false
         }
         for (let i = 0; i < this.state.creds.username.length; i++) {
-            if (specialChars.indexOf(this.state.creds.username.charAt(i)) != -1) {
+            if (specialChars.indexOf(this.state.creds.username.charAt(i)) !== -1) {
                 statusUsername = false
             }
         }
-        if (statusUsername == false && statusPassword == false){
+        if (statusUsername === false && statusPassword === false){
             alert("Wrong Username and Password!!!");
             return false
         }
-        else if (statusUsername == false){
+        else if (statusUsername === false){
             alert("Wrong Username!!!");
             return false
         }
-        else if (statusPassword == false){
+        else if (statusPassword === false){
             alert("Wrong Password")
         }
         else {
@@ -81,7 +74,7 @@ class Header extends Component {
         if(attribute==="username"){
             cred.username = event.target.value;
         }
-        else if(attribute=="password"){
+        else if(attribute==="password"){
             cred.password = event.target.value;
         }
         this.setState({ creds: cred})
