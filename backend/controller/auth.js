@@ -18,8 +18,16 @@ exports.signup = (req, res, next) => {
         err.statusCode = 422;
         throw err;
     }
-    bcrypt
-        .hash(password, 12)
+    const db = getDb();
+    db.collection('user').findOne({ email: email })
+        .then(user => {
+            if (!user) {
+                return bcrypt.hash(password, 12)
+            }
+            const error = new Error("Email already exists");
+            error.statusCode = 500;
+            throw error;
+        })
         .then(hashedPw => {
             const employee = new Employee({
                 first_name: first_name,
