@@ -44,14 +44,14 @@ class SignupForm extends Component {
                             password: this.state.details.password}
             console.log("correct creds", form)
             
-            //axios.post('http://localhost:8080/signup', form, {headers: headers})
-            //    .then(response => {
+            axios.post('http://localhost:8080/signup', form, {headers: headers})
+                .then(response => {
                     this.props.history.push("/employer")
-            //    })
-            //    .catch(error => {
-            //        alert(error)
-            //    }
-            //    )
+                })
+                .catch(error => {
+                    alert(error)
+                }
+                )
         }
         else {
             console.log("false")
