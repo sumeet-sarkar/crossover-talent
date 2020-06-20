@@ -1,36 +1,24 @@
 .login_container{
-    margin: 8px 256px 8px 0px; /*top right bottom left */
-    height: 68px;
-    width: 512px;
-    box-shadow: 0 2px 2px #ccc;
-    background-color: brown;
-    float:right;
+    box-sizing: border-box;
+    margin-right: 15%;
+    height: 60px;
+    float: right;
+    margin-top: 10px;
 }
 
-.login_container p {
-    margin:0px;
-    border:0px;
-    padding:0px;
-    font-size: 12px;
-}
-
-.login_username{
+.login_username, .login_password{
+    margin-right: 10px;
     display: inline-block;
-    height: 32px;
-    width: 160px;
-    padding: 6px 16px;
-}
-
-.login_password{
-    display: inline-block;
-    height: 32px;
-    width: 160px;
-    padding: 6px 16px;
+    height: 34px;
+    width: 180px;
 }
 
 .forgotten_password{
-    display: inline-block;
+    color: #000;
+    padding: 0;
+    margin: 0;
+    font-size: 60%;
+    cursor: pointer;
     padding: 4px;
     position: relative;
-    left: 12px;
 }

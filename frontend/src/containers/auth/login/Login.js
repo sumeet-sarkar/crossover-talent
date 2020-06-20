@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import LoginForm from '../../../components/LoginForm/LoginForm.js'
-import axios from 'axios'
+import axios from 'axios';
+
+import LoginForm from '../../../components/loginForm/LoginForm.js';
+import SignUpLandingPage from '../../../components/signup/SignupLandingPage';
 import './Login.css';
-import logo from '../../../images/logo.png'
+import logo from '../../../images/logo.png';
 
 class Login extends Component {
 
@@ -77,13 +79,17 @@ class Login extends Component {
             <>
                 <div className="header">
                     <div className="header_logo">
-                        <img src={logo} alt="logo" />
+                        <img 
+                            src={logo} 
+                            alt="logo" 
+                            width="50px" 
+                            height="50px"/>
                     </div>
                     <LoginForm 
                         changed = {event => this.inputHandler(event)}
                         login = {event => this.loginHandler(event)}/>
                 </div>
-                
+                <SignUpLandingPage />
             </>
         );
     }

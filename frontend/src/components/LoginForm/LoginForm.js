@@ -7,16 +7,26 @@ const loginForm = props => {
         return (
             <div className="login_container">
                 <div className="login_username">
-                    <p>Email or phone</p>
-                    <input type="text" size="18" name="email" onChange={props.changed} value={props.email}/>
+                    <input 
+                        type="text" 
+                        size="18" 
+                        name="email" 
+                        onChange={props.changed} 
+                        value={props.email}
+                        placeholder="Enter your email id"/>
                 </div>
                 <div className="login_password">
-                    <p>Password</p>
-                    <input type="text" size="18" name="password" onChange={props.changed} value={props.password}/>
+                    <input 
+                        type="text" 
+                        size="18" 
+                        name="password" 
+                        onChange={props.changed} 
+                        value={props.password}
+                        placeholder="Enter your email id"/>
                 </div>
                 <button
                     type="button" onClick={props.login}>
-                    Login
+                    Log In
                 </button>
                 <div className="forgotten_password">
                     <p>Forgotten Pasword?</p>

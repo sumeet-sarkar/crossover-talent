@@ -1,11 +1,18 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 
-import './Signup.css';
+import './SignupLandingPage.css';
 
 const signupLandingPage = props => {
         return (
             <div className="Signup">
+                <h2>The most simple and eficient job on the internet</h2>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+                <h2>
+                    Sign up as
+                </h2>
                 <div className="signup_buttons">
                 <NavLink
                     className="link_style"
