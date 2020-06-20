@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import { Route } from 'react-router-dom'
 
-import Header from './Header/Header.js';
-import Signup from './Signup/Signup.js';
-import SignupForm from './SignupForm/SignupForm.js'
-import JobSeeker from './JobSeeker/JobSeeker.js'
+import Login from './containers/auth/login/Login';
+import SignUp from './containers/auth/SignUp/SignUp';
+import JobSeeker from './containers/JobSeeker/JobSeeker';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div className="App">
-          <Route path="/" component={Header}/>
-          <Route path="/" exact component={Signup}/>
-          <Route path="/signup" exact component={SignupForm}/>
+          <Route path="/" exact component={Login}/>
+          <Route path="/signup" exact component={SignUp}/>
           <Route path="/jobseeker" exact component={JobSeeker}/>
           <Route path="/employer" exact render={() => <h2>Welcome Employer</h2>}/>
         </div>

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
+
+import logo from '../../../images/logo.png';
+
+import './SignUp.css';
 //import { Route, Link } from 'react-router-dom'
 
 class SignupForm extends Component {
@@ -69,6 +73,12 @@ class SignupForm extends Component {
 
     render() {
         return(
+            <>
+            <div className="header">
+                <div className="header_logo">
+                    <img src={logo} alt="logo" />
+                </div>
+            </div>
             <div className = "SignupForm">
             <form onSubmit={this.sendForm}>
                 <label>
@@ -94,6 +104,7 @@ class SignupForm extends Component {
                 Signup
             </button>
             </div>
+            </>
         )
     }
 }
