@@ -79,11 +79,12 @@ class Login extends Component {
             <>
                 <div className="header">
                     <div className="header_logo">
-                        <img 
+                        {/* <img 
                             src={logo} 
                             alt="logo" 
                             width="50px" 
-                            height="50px"/>
+                            height="50px"/> */}
+                        <h3>Crossover Talent</h3>
                     </div>
                     <LoginForm 
                         changed = {event => this.inputHandler(event)}

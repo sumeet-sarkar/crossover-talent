@@ -1,16 +1,16 @@
 .login_container{
     box-sizing: border-box;
     margin-right: 15%;
-    height: 60px;
+    height: 50px;
     float: right;
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .login_username, .login_password{
     margin-right: 10px;
     display: inline-block;
     height: 34px;
-    width: 180px;
+    width: 190px;
 }
 
 .forgotten_password{
@@ -19,6 +19,5 @@
     margin: 0;
     font-size: 60%;
     cursor: pointer;
-    padding: 4px;
     position: relative;
 }

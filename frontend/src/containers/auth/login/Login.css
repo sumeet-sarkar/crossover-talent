@@ -3,6 +3,17 @@
     width: 100%;
     background-color: #4fcbfc;
     box-sizing: border-box;
+    box-shadow: 0 1px 1px 1px #1bb7ff;
+}
+
+.header h3 {
+    font-size: 120%;
+    letter-spacing: 1px;
+    color: #fff;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0;
+    margin-top: 12px;
 }
 
 .header_logo{

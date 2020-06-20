@@ -22,7 +22,7 @@ const loginForm = props => {
                         name="password" 
                         onChange={props.changed} 
                         value={props.password}
-                        placeholder="Enter your email id"/>
+                        placeholder="Enter your password"/>
                 </div>
                 <button
                     type="button" onClick={props.login}>
