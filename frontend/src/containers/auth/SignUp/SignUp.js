@@ -20,7 +20,6 @@ class SignupForm extends Component {
     formInputValidator = () => {
         let status = true
         const details = Object.values(this.state.details);
-        console.log(details)
         if(details.length<4 || details[3].length < 4)
             status = false
         details.map((detail) => {
@@ -32,7 +31,6 @@ class SignupForm extends Component {
             alert("something is wrong with form")
             return status
         }
-        console.log(this.props)
         return true
     }
 
@@ -46,7 +44,6 @@ class SignupForm extends Component {
                             last_name: this.state.details.last_name,
                             email: this.state.details.email,
                             password: this.state.details.password}
-            console.log("correct creds", form)
             
             axios.post('http://localhost:8080/signup', form, {headers: headers})
                 .then(response => {
@@ -56,9 +53,6 @@ class SignupForm extends Component {
                     alert(error)
                 }
                 )
-        }
-        else {
-            console.log("false")
         }
     }
 

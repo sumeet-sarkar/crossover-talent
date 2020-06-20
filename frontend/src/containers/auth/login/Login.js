@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom'
-import logo from '../../../images/logo.png';
+import LoginForm from '../../../components/LoginForm/LoginForm.js'
 import axios from 'axios'
 import './Login.css';
+import logo from '../../../images/logo.png'
 
-class Header extends Component {
+class Login extends Component {
 
       state = {
-        creds: [
-          { email: "", password: ""}
-        ]
+            email: "", 
+            password: ""
       };
 
     loginHandler = () => {
@@ -17,10 +16,9 @@ class Header extends Component {
         const headers = {
             'Content-Type': 'application/json'
         }
-        const creds = {email: this.state.creds.username,
-                    password: this.state.creds.password}
+        const creds = {email: this.state.email,
+                    password: this.state.password}
         if (status === true){
-            console.log("correct creds")
             axios.post('http://localhost:8080/login', creds, {headers: headers})
                 .then(response => {
                     console.log(response);
@@ -33,30 +31,30 @@ class Header extends Component {
     }
 
     credsValidator = () => {
-        if (this.state.creds.username == null || this.state.creds.password == null){
+        if (this.state.email == null || this.state.email === "" || this.state.password == null || this.state.password === ""){
             alert("empty creds not allowed")
             return false
         }
-        let statusUsername = true
+        let statusEmail = true
         let statusPassword = true
     
         let specialChars = "*|,\":<>[]{}`\';()&$#%";
-        if(this.state.creds.username.length < 4){
-            statusUsername = false
+        if(this.state.email.length < 4){
+            statusEmail = false
         }
-        if(this.state.creds.password.length < 2){
+        if(this.state.password.length < 2){
             statusPassword = false
         }
-        for (let i = 0; i < this.state.creds.username.length; i++) {
-            if (specialChars.indexOf(this.state.creds.username.charAt(i)) !== -1) {
-                statusUsername = false
+        for (let i = 0; i < this.state.email.length; i++) {
+            if (specialChars.indexOf(this.state.email.charAt(i)) !== -1) {
+                statusEmail = false
             }
         }
-        if (statusUsername === false && statusPassword === false){
+        if (statusEmail === false && statusPassword === false){
             alert("Wrong Username and Password!!!");
             return false
         }
-        else if (statusUsername === false){
+        else if (statusEmail === false){
             alert("Wrong Username!!!");
             return false
         }
@@ -68,64 +66,27 @@ class Header extends Component {
         }
     }
 
-    inputHandler = (event, attribute) => {
-        const cred = {
-            ...this.state.creds
-        }
-        if(attribute==="username"){
-            cred.username = event.target.value;
-        }
-        else if(attribute==="password"){
-            cred.password = event.target.value;
-        }
-        this.setState({ creds: cred})
+    inputHandler = (event) => {
+        let value = event.target.value
+        let name = event.target.name
+        this.setState({ [name]: value})
     }
 
     render() {
         return (
             <>
-            <div className="header">
-                <div className="header_logo">
-                    <img src={logo} alt="logo" />
-                </div>
-                <div className="login_container">
-                    <div className="login_username">
-                        <p>Email or phone</p>
-                        <input type="text" size="18" onChange={event => this.inputHandler(event, "username")}/>
+                <div className="header">
+                    <div className="header_logo">
+                        <img src={logo} alt="logo" />
                     </div>
-                    <div className="login_password">
-                        <p>Password</p>
-                        <input type="text" size="18" onChange={event => this.inputHandler(event, "password")}/>
-                    </div>
-                    <button
-                        type="button"
-                        onClick={this.loginHandler}>
-                        Login
-                    </button>
-                    <div className="forgotten_password">
-                        <p>Forgotten Pasword?</p>
-                    </div>
+                    <LoginForm 
+                        changed = {event => this.inputHandler(event)}
+                        login = {event => this.loginHandler(event)}/>
                 </div>
-            </div>
-            <div className="Signup">
-                <div className="signup_buttons">
-                <NavLink
-                    className="link_style"
-                    //hash= "#submit"
-                    //search= '?quick-submit=true'
-                    to="/jobseeker"
-                >Job seeker</NavLink>
-                </div>
-                <div className="signup_buttons">
-                <NavLink
-                    className="link_style"
-                    to="/signup"
-                >Employer</NavLink>
-                </div>
-            </div>
-        </>
+                
+            </>
         );
     }
 }
 
-export default Header;
+export default Login;
