@@ -5,8 +5,9 @@ const mock_data = require('../../MOCK_DATA.json');
 exports.home = (req, res, next) => {
     const pageNo = req.query.pageNo || 1;
     const itemsPerPage = req.query.itemsPerPage || 20;
+    const location = req.query.location;
     const db = getDb();
-
+    //res.status(200).send("Queried");
     let totalItems;
     db.collection('jobs').countDocuments()
         .then(count => {
