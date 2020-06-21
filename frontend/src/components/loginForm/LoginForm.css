@@ -1,4 +1,4 @@
-.login_container{
+.login_form_container{
     box-sizing: border-box;
     margin-right: 15%;
     height: 50px;
@@ -6,14 +6,14 @@
     margin-top: 20px;
 }
 
-.login_username, .login_password{
+.login_form_username, .login_form_password{
     margin-right: 10px;
     display: inline-block;
     height: 34px;
     width: 190px;
 }
 
-.forgotten_password{
+.login_form_forgotten_password{
     color: #000;
     padding: 0;
     margin: 0;

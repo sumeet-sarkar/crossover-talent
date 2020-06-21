@@ -4,11 +4,11 @@ import { NavLink } from 'react-router-dom';
 import employeeIcon from '../../images/employee.png';
 import employerIcon from '../../images/employer.png';
 
-import './SignupLandingPage.css';
+import './SignUpLandingPage.css';
 
-const signupLandingPage = props => {
+const signUpLandingPage = props => {
         return (
-            <div className="Signup">
+            <div className="sign_up">
                 <h2>The most simple and efficient job portal on the internet</h2>
                 <p>
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -16,7 +16,7 @@ const signupLandingPage = props => {
                 <h2>
                     Sign up as
                 </h2>
-                <div className="signup_buttons">
+                <div className="sign_up_buttons">
                     <NavLink
                         className="link_style"
                         //hash= "#submit"
@@ -26,7 +26,7 @@ const signupLandingPage = props => {
                     </NavLink>
                     <img src={employeeIcon} alt="find jobs" width={iconsSize.width} height={iconsSize.height}/>
                 </div>
-                <div className="signup_buttons">
+                <div className="sign_up_buttons">
                     <img src={employerIcon} alt="start hiring" width={iconsSize.width} height={iconsSize.height}/>
                     <NavLink
                         className="link_style"
@@ -43,4 +43,4 @@ const iconsSize = {
     width: "55px",
 };
 
-export default signupLandingPage;
+export default signUpLandingPage;
