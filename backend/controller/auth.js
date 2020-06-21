@@ -25,7 +25,7 @@ exports.signup = (req, res, next) => {
                 return bcrypt.hash(password, 12)
             }
             const error = new Error("Email already exists");
-            error.statusCode = 500;
+            error.statusCode = 403;
             throw error;
         })
         .then(hashedPw => {
@@ -41,7 +41,7 @@ exports.signup = (req, res, next) => {
             res.status(200).json({ message: "User Created"})
         })
         .catch(err => {
-            if(!err.statusCode) {
+            if (!err.statusCode) {
                 err.statusCode=500;
             };
             next(err);

@@ -1,0 +1,48 @@
+.Signup {
+    display: block;
+    max-width: 750px;
+    height: 100%;
+    color: #46c4ff;
+    text-align: center;
+    align-items: center;
+    margin: 50px auto;
+}
+
+.Signup h2 {
+    padding: 20px;
+}
+
+.Signup p {
+    padding: 30px 0;
+    font-size: 90%;
+    color: #444;
+    letter-spacing: 0.8px;
+    word-spacing: 3px;
+}
+
+.signup_buttons {
+    cursor: pointer;
+    font-size: 120%;
+    font-weight: bold;
+    display: inline-block;
+    padding: 0 22px;
+    margin: 20px;
+    color: #000;
+    border-radius: 40px;
+    overflow: hidden;
+    background-color: #46c4ff;
+}
+
+.signup_buttons img {
+    vertical-align: bottom;
+    margin-top: 4px;
+}
+
+.signup_buttons a {
+    font-size: 90%;
+    padding: 15px 10px;
+    display: inline-block;
+    height: 55px;
+    vertical-align: top;
+    color: #fff;
+}
