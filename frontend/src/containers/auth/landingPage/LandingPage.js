@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import LoginForm from '../../../components/loginForm/LoginForm.js';
-import SignUpLandingPage from '../../../components/signup/SignupLandingPage';
-import './Login.css';
-import logo from '../../../images/logo.png';
+import SignUpLandingPage from '../../../components/signUp/SignUpLandingPage';
+import './LandingPage.css';
 
-class Login extends Component {
+class LandingPage extends Component {
 
       state = {
             email: "", 
@@ -77,8 +76,8 @@ class Login extends Component {
     render() {
         return (
             <>
-                <div className="header">
-                    <div className="header_logo">
+                <div className="landing_page_header">
+                    <div className="landing_page_header_logo">
                         {/* <img 
                             src={logo} 
                             alt="logo" 
@@ -96,4 +95,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default LandingPage;
