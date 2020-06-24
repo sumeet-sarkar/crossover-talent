@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyparser = require('body-parser');
+const path = require('path');
 
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 const employeeRouter = require('./routes/employee');
 
 const mongoConnect = require('./util/database').mongoConnect;
@@ -22,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use(authRouter);
 app.use(employeeRouter);
+app.use(adminRouter);
 
 app.use('/', (req, res, next) => {
     res.status(404).send('Page not found');

@@ -3,8 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const getDb = require('../util/database').getDb;
 
-const mockData = require('../MOCK_DATA.json');
-
 class Jobs {
     constructor(props) {
         this.company = props.company,
@@ -30,35 +28,15 @@ class Jobs {
             })
     }
 
-    static add_bulk_data(req, res, next) {
+    static add_bulk_data(data) {
         const db = getDb();
-        return db.collection('jobs').insertMany(mockData)
+        return db.collection('jobs').insertMany(data)
             .then(res => {
                 console.log("Added jobs data in bulk");
             })
             .catch(err => {
                 throw err;
             })
-    }
-
-    static refactorMockData() {
-        const newMockData = mockData.map(data => {
-            const temp = {};
-            temp['company'] = faker.company.companyName().toLowerCase();
-            temp['title'] = faker.name.jobTitle().toLowerCase();
-            temp['description'] = faker.lorem.paragraph().toLowerCase();
-            temp['city'] = faker.address.city().toLowerCase();
-            temp['category'] = faker.commerce.department().toLowerCase();
-            temp['salary'] = faker.finance.amount();
-            temp['currency'] = faker.finance.currencyName().toLowerCase();
-            temp['currencySymbol'] = faker.finance.currencySymbol();
-            temp['skills'] = data.skills;
-            temp['bookmarks'] = [];
-            return temp;
-        });
-        fs.writeFile(path.join(path.dirname(process.mainModule.filename), 'MOCK_DATA.json'), JSON.stringify(newMockData, null, 2), err => {
-            console.log(err);
-        })
     };
 };
 

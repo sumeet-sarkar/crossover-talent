@@ -7,8 +7,8 @@ exports.home = (req, res, next) => {
     const db = getDb();
     const pageNo = req.query.pageNo || 1;
     const itemsPerPage = req.query.itemsPerPage || 20;
-    const {city, category, search} = req.query;
-    const query = _queryBuilder(city, category, search);
+    const {city, category, minSalary, maxSalary, search} = req.query;
+    const query = _queryBuilder(city, category, minSalary, maxSalary, search);
     let totalItems;
     
     db.collection('jobs').countDocuments(query)
@@ -17,6 +17,7 @@ exports.home = (req, res, next) => {
             return db.collection('jobs').find(query)
                 .skip((pageNo - 1) * itemsPerPage)
                 .limit(itemsPerPage)
+                .sort({ "city": 1 })
                 .toArray()
         })
         .then(jobs => {
@@ -31,7 +32,7 @@ exports.home = (req, res, next) => {
 };
 
 //Update Bookmarks
-exports.updatedBoomarks = (req, res, next) => {
+exports.updateBoomarks = (req, res, next) => {
     const db = getDb();
     const updatedBoomarks = [];
     const {userId, jobId} = req.body;
@@ -62,49 +63,28 @@ exports.updatedBoomarks = (req, res, next) => {
         })
 }
 
-//Employee Mock Data
-exports.addBulkJobData = (req, res, next) => {
-    Jobs.add_bulk_data()
-        .then(r => {
-            res.status(200).send("Added jobs data in bulk")
-        })
-        .catch(err => {
-            if (!err.statuCode) {
-                err.statuCode = 500;
-            };
-            next(err);
-        })
-};
-
-exports.dropJobs = (req, res, next) => {
-    const db = getDb();
-    db.collection('jobs').drop()
-        .then(res => {
-            res.status(200).send("Dropped all jobs successfully");
-        })
-        .catch(err => {
-            if (!err.statuCode) {
-                err.statuCode = 500;
-            };
-            next(err);
-        })
-}
-
-exports.refactorJobData = (req, res, next) => {
-    Jobs.refactorMockData();
-}
-
-const _queryBuilder = (city, category, search) => {
+const _queryBuilder = (city, category, minSalary, maxSalary, search) => {
     const query = {};
-    if (city || category)
+
+    if (city || category || minSalary || maxSalary)
         query['$and'] = [];
-    if (search)
-        query['$text'] = {};
-    if (city)
+
+    if (city) {
         query['$and'].push( { city: { $in: city.split(',') } } );
+    }
+
     if (category)
         query['$and'].push( { category: { $in: category.split(',') } } );
+
+    if (minSalary)
+        query['$and'].push( { salary: { $gt: minSalary } });
+
+    if (maxSalary)
+        query['$and'].push( { salary: { $lt: maxSalary } })
+
     if (search)
+        query['$text'] = {};
         query['$text']['$search'] = search;
+
     return query;
 }
