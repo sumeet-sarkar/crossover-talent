@@ -76,7 +76,6 @@ exports.login = (req, res, next) => {
             }, 
             'secret',
             { expiresIn: '2h' });
-            req.session.loggedIn = true;
             res.status(200).json({ token: token, userId: loadedUser._id.toString() });
         })
         .catch(err => {
