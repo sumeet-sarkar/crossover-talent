@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const path = require('path');
 
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
@@ -17,8 +15,6 @@ const app = express();
 app.use(bodyparser.json());
 
 app.use(cookieParser());
-
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
 
 //CORS Handler
 app.use((req, res, next) => {

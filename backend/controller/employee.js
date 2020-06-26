@@ -82,9 +82,10 @@ const _queryBuilder = (city, category, minSalary, maxSalary, search) => {
     if (maxSalary)
         query['$and'].push( { salary: { $lt: maxSalary } })
 
-    if (search)
+    if (search) {
         query['$text'] = {};
         query['$text']['$search'] = search;
+    }
 
     return query;
 }
