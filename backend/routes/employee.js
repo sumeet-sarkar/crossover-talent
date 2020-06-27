@@ -6,6 +6,6 @@ const verifyAuth = require('../middleware/verifyAuth');
 const employeeController = require('../controller/employee');
 
 router.get('/employee/home', verifyAuth, employeeController.home);
-router.get('/employee/add-data', verifyAuth, employeeController.add_data);
+router.get('/employee/update-bookmarks', verifyAuth, employeeController.updateBoomarks);
 
 module.exports = router;

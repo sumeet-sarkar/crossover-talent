@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyparser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 const employeeRouter = require('./routes/employee');
 
 const mongoConnect = require('./util/database').mongoConnect;
@@ -11,6 +13,8 @@ const app = express();
 
 //Middlewares
 app.use(bodyparser.json());
+
+app.use(cookieParser());
 
 //CORS Handler
 app.use((req, res, next) => {
@@ -22,6 +26,7 @@ app.use((req, res, next) => {
 
 app.use(authRouter);
 app.use(employeeRouter);
+app.use(adminRouter);
 
 app.use('/', (req, res, next) => {
     res.status(404).send('Page not found');

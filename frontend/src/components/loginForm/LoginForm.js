@@ -5,8 +5,8 @@ import './LoginForm.css';
 
 const loginForm = props => {
         return (
-            <div className="login_container">
-                <div className="login_username">
+            <div className="login_form_container">
+                <div className="login_form_username">
                     <input 
                         type="text" 
                         size="18" 
@@ -15,7 +15,7 @@ const loginForm = props => {
                         value={props.email}
                         placeholder="Enter your email id"/>
                 </div>
-                <div className="login_password">
+                <div className="login_form_password">
                     <input 
                         type="text" 
                         size="18" 
@@ -28,7 +28,7 @@ const loginForm = props => {
                     type="button" onClick={props.login}>
                     Log In
                 </button>
-                <div className="forgotten_password">
+                <div className="login_form_forgotten_password">
                     <p>Forgotten Pasword?</p>
                 </div>
             </div>

@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom'
 import axios from 'axios';
 
 import LoginForm from '../../../components/loginForm/LoginForm.js';
-import SignUpLandingPage from '../../../components/signup/SignupLandingPage';
-import './Login.css';
-import logo from '../../../images/logo.png';
+import SignUpLandingPage from '../../../components/signUp/SignUpLandingPage';
+import './LandingPage.css';
 
-class Login extends Component {
+class LandingPage extends Component {
 
-      state = {
-            email: "", 
-            password: ""
-      };
+    state = {
+        email: "", 
+        password: "",
+        bearerToken: "",
+        userId: ""
+    };
 
     loginHandler = () => {
         let status = this.credsValidator()
+        let bearerToken = ""
+        let userId = ""
         const headers = {
             'Content-Type': 'application/json'
         }
@@ -23,10 +27,15 @@ class Login extends Component {
         if (status === true){
             axios.post('http://localhost:8080/login', creds, {headers: headers})
                 .then(response => {
-                    console.log(response);
+                    bearerToken = response.data.token
+                    userId = response.data.userId
+                    this.setState({ 
+                            bearerToken: bearerToken,
+                            userId: userId
+                        })
                 })
                 .catch(error => {
-                    console.log(error)
+                    alert(error)
                 }
             )
         }
@@ -40,7 +49,8 @@ class Login extends Component {
         let statusEmail = true
         let statusPassword = true
     
-        let specialChars = "*|,\":<>[]{}`\';()&$#%";
+        //2 backslashes("\") are present to avoid warning of Unnecessary escape character: \;  no-useless-escape
+        let specialChars = "*|,\":<>[]{}`\\';()&$#%";
         if(this.state.email.length < 4){
             statusEmail = false
         }
@@ -75,10 +85,18 @@ class Login extends Component {
     }
 
     render() {
+        if(this.state.bearerToken){
+            return <Redirect to={{
+                pathname: "/employee",
+                bearerToken: this.state.bearerToken,
+                userId: this.state.userId
+            }} />   
+        }
+
         return (
             <>
-                <div className="header">
-                    <div className="header_logo">
+                <div className="landing_page_header">
+                    <div className="landing_page_header_logo">
                         {/* <img 
                             src={logo} 
                             alt="logo" 
@@ -96,4 +114,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default LandingPage;

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import logo from '../../../images/logo.png';
-
 import './SignUp.css';
-//import { Route, Link } from 'react-router-dom'
+import SignUpForm from '../../../components/signUp/SignUpForm.js'
 
-class SignupForm extends Component {
+class SignUp extends Component {
 
     state = {
         details: {
-            first_name: "",
+            first_name: "abc",
             last_name: "",
             email: "",
             password: "",
@@ -20,13 +18,18 @@ class SignupForm extends Component {
     formInputValidator = () => {
         let status = true
         const details = Object.values(this.state.details);
+
         if(details.length<4 || details[3].length < 4)
             status = false
+
         details.map((detail) => {
             if(detail === null || detail === ""){
                 status = false
             }
+            //to remove warning of """Expected to return a value in arrow function array-callback-return"""
+            return true
         });
+
         if (status===false){
             alert("something is wrong with form")
             return status
@@ -35,7 +38,7 @@ class SignupForm extends Component {
     }
 
     sendForm = () => {
-        let status = this.formInputValidator()
+        const status = this.formInputValidator()
         if (status === true){
             const headers = {
                 'Content-Type': 'application/json'
@@ -56,51 +59,38 @@ class SignupForm extends Component {
         }
     }
 
-    inputHandler = (event, attribute) => {
+    inputHandler = (event) => {
+        const value = event.target.value
+        const name = event.target.name
+        this.setState({ [name]: value})
+        
         const details = {
             ...this.state.details
         }
-        details[attribute] = event.target.value
-        
+        details[name] = value
         this.setState({ details: details})
     }
 
     render() {
         return(
             <>
-            <div className="header">
-                <div className="header_logo">
-                    <img src={logo} alt="logo" />
+                <div className="landing_page_header">
+                    <div className="landing_page_header_logo">
+                        {/* <img 
+                            src={logo} 
+                            alt="logo" 
+                            width="50px" 
+                            height="50px"/> */}
+                        <h3>Crossover Talent</h3>
+                    </div>
                 </div>
-            </div>
-            <div className = "SignupForm">
-            <form onSubmit={this.sendForm}>
-                <label>
-                    first Name:
-                    <input type="text" onChange={event => this.inputHandler(event, "first_name")} />
-                </label>
-                <label>
-                    Last Name:
-                    <input type="text" onChange={event => this.inputHandler(event, "last_name")} />
-                </label>
-                <label>
-                    email:
-                    <input type="text" onChange={event => this.inputHandler(event, "email")} />
-                </label>
-                <label>
-                    Password:
-                    <input type="text" onChange={event => this.inputHandler(event, "password")} />
-                </label>
-            </form>
-            <button
-                type="button"
-                onClick={this.sendForm}>
-                Signup
-            </button>
-            </div>
+                <SignUpForm
+                    changed = {event => this.inputHandler(event)}
+                    signUp = {event => this.sendForm(event)} />
             </>
+
         )
     }
 }
 
-export default SignupForm
+export default SignUp

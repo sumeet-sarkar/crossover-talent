@@ -1,0 +1,8 @@
+.job_seeker_posts_box_post{
+    display: inline-block;
+    width:100%;
+    padding: 16px;
+    border: 4px;
+    box-shadow: 0 3px 3px #ccc;
+    height:150px;
+}
