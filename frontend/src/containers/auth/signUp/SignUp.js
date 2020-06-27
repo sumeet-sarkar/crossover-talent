@@ -18,13 +18,18 @@ class SignUp extends Component {
     formInputValidator = () => {
         let status = true
         const details = Object.values(this.state.details);
+
         if(details.length<4 || details[3].length < 4)
             status = false
+
         details.map((detail) => {
             if(detail === null || detail === ""){
                 status = false
             }
+            //to remove warning of """Expected to return a value in arrow function array-callback-return"""
+            return true
         });
+
         if (status===false){
             alert("something is wrong with form")
             return status
@@ -33,7 +38,7 @@ class SignUp extends Component {
     }
 
     sendForm = () => {
-        let status = this.formInputValidator()
+        const status = this.formInputValidator()
         if (status === true){
             const headers = {
                 'Content-Type': 'application/json'
@@ -55,8 +60,8 @@ class SignUp extends Component {
     }
 
     inputHandler = (event) => {
-        let value = event.target.value
-        let name = event.target.name
+        const value = event.target.value
+        const name = event.target.name
         this.setState({ [name]: value})
         
         const details = {
@@ -67,7 +72,6 @@ class SignUp extends Component {
     }
 
     render() {
-        console.log(this.state.details)
         return(
             <>
                 <div className="landing_page_header">

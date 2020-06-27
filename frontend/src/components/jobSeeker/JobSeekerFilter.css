@@ -1,0 +1,22 @@
+.job_seeker_filter_box{
+    display: inline-block;
+    width: 256px;
+    height: 720px;
+    border: 4px;
+    box-shadow: 0 3px 3px #ccc;
+    margin: 64px 16px;
+    padding: 8px;
+    position: fixed;
+}
+
+.job_seeker_filter_box_subpart{
+    display: inline-block;
+    height: 25%;
+    border: 4px #ccc;
+    box-shadow: 0 3px 3px #ccc;
+    padding: 4px;
+}
+
+.dropdown_selected{
+    color:red;
+}

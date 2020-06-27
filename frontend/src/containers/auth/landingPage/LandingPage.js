@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Redirect} from 'react-router-dom'
 import axios from 'axios';
 
 import LoginForm from '../../../components/loginForm/LoginForm.js';
@@ -7,13 +8,17 @@ import './LandingPage.css';
 
 class LandingPage extends Component {
 
-      state = {
-            email: "", 
-            password: ""
-      };
+    state = {
+        email: "", 
+        password: "",
+        bearerToken: "",
+        userId: ""
+    };
 
     loginHandler = () => {
         let status = this.credsValidator()
+        let bearerToken = ""
+        let userId = ""
         const headers = {
             'Content-Type': 'application/json'
         }
@@ -22,10 +27,15 @@ class LandingPage extends Component {
         if (status === true){
             axios.post('http://localhost:8080/login', creds, {headers: headers})
                 .then(response => {
-                    console.log(response);
+                    bearerToken = response.data.token
+                    userId = response.data.userId
+                    this.setState({ 
+                            bearerToken: bearerToken,
+                            userId: userId
+                        })
                 })
                 .catch(error => {
-                    console.log(error)
+                    alert(error)
                 }
             )
         }
@@ -39,7 +49,8 @@ class LandingPage extends Component {
         let statusEmail = true
         let statusPassword = true
     
-        let specialChars = "*|,\":<>[]{}`\';()&$#%";
+        //2 backslashes("\") are present to avoid warning of Unnecessary escape character: \;  no-useless-escape
+        let specialChars = "*|,\":<>[]{}`\\';()&$#%";
         if(this.state.email.length < 4){
             statusEmail = false
         }
@@ -74,6 +85,14 @@ class LandingPage extends Component {
     }
 
     render() {
+        if(this.state.bearerToken){
+            return <Redirect to={{
+                pathname: "/employee",
+                bearerToken: this.state.bearerToken,
+                userId: this.state.userId
+            }} />   
+        }
+
         return (
             <>
                 <div className="landing_page_header">
