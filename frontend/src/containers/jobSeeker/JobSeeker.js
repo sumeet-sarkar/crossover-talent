@@ -29,7 +29,7 @@ class JobSeeker extends Component {
 		}]
 	};
 
-	applyJob = (jobId) => {
+	applyJob = (e, jobId) => {
 		const headers = {
 			'Content-Type': 'application/json',
 			'Authorization': `Bearer ${this.props.location.bearerToken}`
@@ -46,7 +46,7 @@ class JobSeeker extends Component {
 			.catch(error => {
 				alert(error)
 			}
-			)
+		)
 	}
 
 	applyFilter = () => {
