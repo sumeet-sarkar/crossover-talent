@@ -1,16 +1,16 @@
 const getDb = require('../util/database').getDb;
+const Application = require('../models/application');
 
 const Jobs = require('../models/jobs');
 
 //Employee Home
 exports.home = (req, res, next) => {
-    const db = getDb();
     const pageNo = req.query.pageNo || 1;
     const itemsPerPage = req.query.itemsPerPage || 20;
     const {city, category, minSalary, maxSalary, search} = req.query;
     const query = _queryBuilder(city, category, minSalary, maxSalary, search);
     let totalItems;
-    
+    const db = getDb();
     db.collection('jobs').countDocuments(query)
         .then(count => {
             totalItems = count;
@@ -31,24 +31,52 @@ exports.home = (req, res, next) => {
         })
 };
 
-//Update Bookmarks
+
+//Update new application from user
+exports.newApplication = (req, res, next) => {
+    //Save ID's of user and job
+    const jobId = req.body.jobId;
+    const userId = req.body.userId;
+    const application = new Application({ userId: userId });
+
+    //Check if ID's aren't null
+    if (userId && jobId) {
+        //Update Job's application field
+        application.updateJobs(jobId)
+            .then(result => {
+                if (result.result.nModified == 1) {
+                    //Update User's application field
+                    return application.updateUser(jobId)
+                }
+                const err = new Error("Couldn't update jobs")
+                err.statuCode = 500;
+                throw err;
+            })
+            .then((result) => {
+                res.status(200).send(result);
+            })
+            .catch(err => {
+                next(err);
+            })
+    } else {
+        const err = new Error("Please provide valid details");
+        err.statuCode = 500;
+        throw err;
+    }
+}
+
+//Update Bookmarks(not tested)
 exports.updateBoomarks = (req, res, next) => {
     const db = getDb();
-    const updatedBoomarks = [];
     const {userId, jobId} = req.body;
+    const updatedBoomarks = [jobId];
     db.collection('user').find({ _id: userId })
         .then(user => {
-            updatedBoomarks = user.boomarks
+            updatedBoomarks = user.bookmarks
             updatedBoomarks.push(jobId);
             return db.collection('user').update(
-                {
-                    _id: userId
-                },
-                {
-                    $set: {
-                        "bookmarks": updatedBoomarks
-                    }
-                }
+                { _id: userId },
+                { $set: { "bookmarks": updatedBoomarks } }
             )
         })
         .then(res => {

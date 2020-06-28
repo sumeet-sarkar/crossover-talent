@@ -19,12 +19,11 @@ exports.addBulkJobData = (req, res, next) => {
         })
 };
 
-
 //Delete all jobs
 exports.dropJobs = (req, res, next) => {
     const db = getDb();
     db.collection('jobs').drop()
-        .then(res => {
+        .then(result => {
             res.status(200).send("Dropped all jobs successfully");
         })
         .catch(err => {
