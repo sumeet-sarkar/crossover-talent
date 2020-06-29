@@ -1,5 +1,3 @@
-const { application } = require('express');
-
 const getDb = require('../util/database').getDb;
 var ObjectId = require('mongodb').ObjectID;
 

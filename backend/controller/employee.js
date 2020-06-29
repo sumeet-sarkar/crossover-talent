@@ -1,5 +1,6 @@
 const getDb = require('../util/database').getDb;
 const Application = require('../models/application');
+var ObjectId = require('mongodb').ObjectID;
 
 const Jobs = require('../models/jobs');
 
@@ -22,6 +23,28 @@ exports.home = (req, res, next) => {
         })
         .then(jobs => {
             res.status(200).json({totalItems: totalItems, jobs: jobs });
+        })
+        .catch(err => {
+            if (!err.statuCode) {
+                err.statuCode = 500;
+            };
+            next(err);
+        })
+};
+
+
+//Single Job Post
+exports.singleJob = (req, res, next) => {
+    const jobId = req.params.jobId;
+    const db = getDb();
+    // db.collection('jobs').findOne({ _id: ObjectId(jobId) }, (err, result) => {
+    //     if (!err) {
+    //         res.status(200).json({job: result });
+    //     } else throw err;
+    // });
+    db.collection('jobs').find({ _id: ObjectId(jobId) }).next()
+        .then(job => {
+            res.status(200).json(job);
         })
         .catch(err => {
             if (!err.statuCode) {
