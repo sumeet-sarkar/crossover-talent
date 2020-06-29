@@ -14,7 +14,8 @@ class Jobs {
         this.logo = props.logo,
         this.salary = props.salary,
         this.currency = props.currency,
-        this.currencySymbol = props.currencySymbol
+        this.currencySymbol = props.currencySymbol,
+        this.applications = {}
     };
 
     save() {

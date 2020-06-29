@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyparser = require('body-parser');
-const cookieParser = require('cookie-parser');
 
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
@@ -14,8 +13,6 @@ const app = express();
 //Middlewares
 app.use(bodyparser.json());
 
-app.use(cookieParser());
-
 //CORS Handler
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,10 +21,13 @@ app.use((req, res, next) => {
     next();
 })
 
+
+//Main routes
 app.use(authRouter);
 app.use(employeeRouter);
 app.use(adminRouter);
 
+//404 Error Handler
 app.use('/', (req, res, next) => {
     res.status(404).send('Page not found');
 })
