@@ -45,16 +45,23 @@ const jobSeekerFilter = props => {
                         type="text" 
                         size="18" 
                         name="minSalary" 
-                        onChange={props.salary} 
+                        onChange={props.textInput} 
                         value={props.minSalary}
                         placeholder="Enter Minimum Salary"/>
                     <input 
                         type="text" 
                         size="18" 
                         name="maxSalary" 
-                        onChange={props.salary} 
+                        onChange={props.textInput} 
                         value={props.maxSalary}
                         placeholder="Enter Maximum Salary"/>
+                    <input 
+                        type="text" 
+                        size="18" 
+                        name="search" 
+                        onChange={props.textInput} 
+                        value={props.search}
+                        placeholder="Search Here"/>
                 </div>
                 <div>
                     <button
