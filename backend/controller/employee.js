@@ -3,6 +3,7 @@ const Application = require('../models/application');
 var ObjectId = require('mongodb').ObjectID;
 
 const Jobs = require('../models/jobs');
+const { application } = require('express');
 
 //Employee Home
 exports.home = (req, res, next) => {
@@ -16,6 +17,7 @@ exports.home = (req, res, next) => {
         .then(count => {
             totalItems = count;
             return db.collection('jobs').find(query)
+                .project({ applications: 0 })
                 .skip((pageNo - 1) * itemsPerPage)
                 .limit(itemsPerPage)
                 .sort({ "city": 1 })
@@ -37,19 +39,11 @@ exports.home = (req, res, next) => {
 exports.singleJob = (req, res, next) => {
     const jobId = req.params.jobId;
     const db = getDb();
-    // db.collection('jobs').findOne({ _id: ObjectId(jobId) }, (err, result) => {
-    //     if (!err) {
-    //         res.status(200).json({job: result });
-    //     } else throw err;
-    // });
     db.collection('jobs').find({ _id: ObjectId(jobId) }).next()
         .then(job => {
             res.status(200).json(job);
         })
         .catch(err => {
-            if (!err.statuCode) {
-                err.statuCode = 500;
-            };
             next(err);
         })
 };
@@ -88,6 +82,33 @@ exports.newApplication = (req, res, next) => {
     }
 }
 
+exports.myApplications = (req, res, next) => {
+    const db = getDb();
+    const uId = req.id;
+    try {
+        let myApplications = req.query.myApplications.split(',');
+        myApplications = myApplications.map(application => {
+            return ObjectId(application)
+        })
+        db.collection('jobs').find({ _id: { $in: myApplications } })
+            .toArray()
+            .then(jobs => {
+                for (let index = 0; index < jobs.length; ++index) {
+                    const filteredApplications = jobs[index].applications.filter(item => {
+                        return item.userId === uId
+                    });
+                    jobs[index].applications = filteredApplications;
+                }
+                res.status(200).json(jobs);
+            })
+            .catch(err => {
+                next(err);
+            })
+    } catch {
+        res.status(400).json({ message: "Invalid parameters" });
+    }
+}
+
 //Update Bookmarks(not tested)
 exports.updateBoomarks = (req, res, next) => {
     const db = getDb();
@@ -107,9 +128,6 @@ exports.updateBoomarks = (req, res, next) => {
             res.status(200).send("Updated Bookmarks");
         })
         .catch(err => {
-            if (!err.statuCode) {
-                err.statuCode = 500;
-            };
             next(err);
         })
 }
