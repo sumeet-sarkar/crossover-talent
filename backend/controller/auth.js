@@ -54,7 +54,7 @@ exports.login = (req, res, next) => {
     const password = req.body.password;
     const db = getDb();
     let loadedUser
-    db.collection('user').findOne({ email: email })
+    return db.collection('user').findOne({ email: email })
         .then(user => {
             if(!user) {
                 const error = new Error("User not found");
@@ -62,7 +62,7 @@ exports.login = (req, res, next) => {
                 throw error;
             }
             loadedUser = user;
-            return bcrypt.compare(password, loadedUser.password)
+            return bcrypt.compare(password, loadedUser.password);
         })
         .then(equality => {
             if(!equality) {
@@ -76,12 +76,15 @@ exports.login = (req, res, next) => {
             }, 
             'secret',
             { expiresIn: '24h' });
-            res.status(200).json({ token: token, userId: loadedUser._id.toString() });
+            delete loadedUser.password;
+            res.status(200).json({ token: token, user: loadedUser });
+            return res;
         })
         .catch(err => {
             if(!err.statusCode) {
                 err.statusCode=500;
             };
             next(err);
+            return err;
         });
 };
