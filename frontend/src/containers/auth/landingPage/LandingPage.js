@@ -12,13 +12,13 @@ class LandingPage extends Component {
         email: "", 
         password: "",
         bearerToken: "",
-        userId: ""
+        user: ""
     };
 
     loginHandler = () => {
         let status = this.credsValidator()
         let bearerToken = ""
-        let userId = ""
+        let user = ""
         const headers = {
             'Content-Type': 'application/json'
         }
@@ -28,16 +28,15 @@ class LandingPage extends Component {
             axios.post('http://localhost:8080/login', creds, {headers: headers})
                 .then(response => {
                     bearerToken = response.data.token
-                    userId = response.data.userId
+                    user = response.data.user
                     this.setState({ 
                             bearerToken: bearerToken,
-                            userId: userId
+                            user: user
                         })
                 })
                 .catch(error => {
                     alert(error)
-                }
-            )
+                })
         }
     }
 
@@ -85,11 +84,12 @@ class LandingPage extends Component {
     }
 
     render() {
+
         if(this.state.bearerToken){
             return <Redirect to={{
                 pathname: "/employee",
                 bearerToken: this.state.bearerToken,
-                userId: this.state.userId
+                user: this.state.user
             }} />   
         }
 

@@ -16,37 +16,22 @@ class JobSeeker extends Component {
 			maxSalary: [],
 			search: []
 		},
-		jobs: [{
-			bookmarks: [],
-			category: "",
-			city: "",
-			company: "",
-			currency: "",
-			currencySymbol: "",
-			description: "",
-			salary: "",
-			skills: [],
-			title: "",
-			id: ""
-		}]
+		jobs: []
 	};
 
 	jobsHandler = (jobsList) => {
 		let jobs = [];
-		jobsList.map(job => {
 
-			let check = true
-			job.applications.forEach(application => {
-				if(application.userId === this.props.location.userId){
+		jobsList.forEach(job => {
+			let check = true;
+			this.props.location.user.applications.forEach(application => {
+				if(application === job._id){
 					check = false
 					return
 				}
 			});
 			if(check)
 				jobs.push(job)
-
-			//to remove warning of """Expected to return a value in arrow function array-callback-return"""
-			return true
 		})
 		this.setState({ jobs: jobs })
 	}
@@ -58,7 +43,7 @@ class JobSeeker extends Component {
 		}
 		const data = {
 			'jobId': jobId,
-			'userId': this.props.location.userId
+			'userId': this.props.location.user._id
 		}
 
 		axios.post('http://localhost:8080/employee/new-application', data, {headers: headers})
@@ -170,6 +155,10 @@ class JobSeeker extends Component {
 			})
 	}
 
+	myApplicationsHandler = () => {
+		this.props.history.push('/my-applications')
+	}
+
 	render() {
 
 		if( this.props.location.bearerToken === undefined || 
@@ -181,11 +170,16 @@ class JobSeeker extends Component {
 			}} />
 		}
 
+		const style = {
+			float:"right"
+		}
+
 		return (
 			<>
 				<div className="landing_page_header">
                     <div className="landing_page_header_logo">
                         <h3>Crossover Talent</h3>
+						<p style={style} onClick={this.myApplicationsHandler}>My Applications</p>
                     </div>
 				</div>
 				<JobSeekerFilter 

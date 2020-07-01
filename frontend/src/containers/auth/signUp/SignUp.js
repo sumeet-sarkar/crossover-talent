@@ -22,12 +22,10 @@ class SignUp extends Component {
         if(details.length<4 || details[3].length < 4)
             status = false
 
-        details.map((detail) => {
+        details.forEach((detail) => {
             if(detail === null || detail === ""){
                 status = false
             }
-            //to remove warning of """Expected to return a value in arrow function array-callback-return"""
-            return true
         });
 
         if (status===false){
