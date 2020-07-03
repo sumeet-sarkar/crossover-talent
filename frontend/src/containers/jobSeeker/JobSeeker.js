@@ -83,6 +83,8 @@ class JobSeeker extends Component {
 		//in either case, we dont want the last character
 		url = url.slice(0,-1)
 
+		console.log("url = ", url)
+
 		axios.get(url, {headers: headers})
 			.then(response => {
 				this.jobsHandler(response.data.jobs)
@@ -156,7 +158,11 @@ class JobSeeker extends Component {
 	}
 
 	myApplicationsHandler = () => {
-		this.props.history.push('/my-applications')
+		this.props.history.push({
+			pathname: '/employee/my-applications',
+			bearerToken: this.props.location.bearerToken,
+			user: this.props.location.user
+		})
 	}
 
 	render() {
