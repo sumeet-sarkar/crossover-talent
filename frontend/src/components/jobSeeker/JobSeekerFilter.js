@@ -9,35 +9,59 @@ const jobSeekerFilter = props => {
                 <div className="job_seeker_filter_box_subpart" name="category">
                     Category
                     <button
-                        type="button" onClick={props.category} value="home">
-                        Home
+                        type="button" onClick={props.category} value="Healthcare">
+                        Healthcare
                     </button>
                     <button
-                        type="button" onClick={props.category} value="shoes">
-                        Shoes
+                        type="button" onClick={props.category} value="Finance">
+                        Finance
                     </button>
                     <button
-                        type="button" onClick={props.category} value="clothing">
-                        Clothing
+                        type="button" onClick={props.category} value="Software">
+                        Software
                     </button>
                     <button
-                        type="button" onClick={props.category} value="computers">
-                        Computers
+                        type="button" onClick={props.category} value="Internet">
+                        Internet
                     </button>
                     <button
-                        type="button" onClick={props.category} value="toys">
-                        Toys
+                        type="button" onClick={props.category} value="Enterprise">
+                        Enterprise
                     </button>
                 </div>
                 <div className="job_seeker_filter_box_subpart">
                     City
                     <button
-                        type="button" onClick={props.city} value="karleeview">
-                        Karleeview
+                        type="button" onClick={props.city} value="Bengaluru">
+                        Bengaluru
                     </button>
                     <button
-                        type="button" onClick={props.city} value="jabarihaven">
-                        jabarihaven
+                        type="button" onClick={props.city} value="Mumbai">
+                        Mumbai
+                    </button>
+                    <button
+                        type="button" onClick={props.city} value="Delhi">
+                        Delhi
+                    </button>
+                    <button
+                        type="button" onClick={props.city} value="Pune">
+                        Pune
+                    </button>
+                    <button
+                        type="button" onClick={props.city} value="Mysuru">
+                        Mysuru
+                    </button>
+                    <button
+                        type="button" onClick={props.city} value="Chennai">
+                        Chennai
+                    </button>
+                    <button
+                        type="button" onClick={props.city} value="Hyderabad">
+                        Hyderabad
+                    </button>
+                    <button
+                        type="button" onClick={props.city} value="Bhubaneswar">
+                        Bhubaneswar
                     </button>
                 </div>
                 <div className="job_seeker_filter_box_subpart">
@@ -45,16 +69,23 @@ const jobSeekerFilter = props => {
                         type="text" 
                         size="18" 
                         name="minSalary" 
-                        onChange={props.salary} 
+                        onChange={props.textInput} 
                         value={props.minSalary}
                         placeholder="Enter Minimum Salary"/>
                     <input 
                         type="text" 
                         size="18" 
                         name="maxSalary" 
-                        onChange={props.salary} 
+                        onChange={props.textInput} 
                         value={props.maxSalary}
                         placeholder="Enter Maximum Salary"/>
+                    <input 
+                        type="text" 
+                        size="18" 
+                        name="search" 
+                        onChange={props.textInput} 
+                        value={props.search}
+                        placeholder="Search Here"/>
                 </div>
                 <div>
                     <button

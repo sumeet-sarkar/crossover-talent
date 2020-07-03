@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom'
 import LandingPage from './containers/auth/landingPage/LandingPage';
 import SignUp from './containers/auth/signUp/SignUp';
 import JobSeeker from './containers/jobSeeker/JobSeeker';
+import JobSeekerApplications from './containers/jobSeeker/JobSeekerApplications'
 
 class App extends Component {
 
@@ -24,6 +25,7 @@ class App extends Component {
                 <Route path="/" exact component={LandingPage}/>
                 <Route path="/signup" exact component={SignUp}/>
                 <Route path="/employee" exact component={JobSeeker}/>
+                <Route path="/employee/my-applications" exact component={JobSeekerApplications}/>
                 <Route path="/employer" exact render={() => <h2>Welcome Employer</h2>}/>
               </div>
           </BrowserRouter>
