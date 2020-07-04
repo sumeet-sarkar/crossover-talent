@@ -1,7 +1,5 @@
-const faker = require('faker');
-const fs = require('fs');
-const path = require('path');
 const getDb = require('../util/database').getDb;
+var ObjectId = require('mongodb').ObjectID;
 
 class Jobs {
     constructor(props) {
@@ -15,7 +13,7 @@ class Jobs {
         this.salary = props.salary,
         this.currency = props.currency,
         this.currencySymbol = props.currencySymbol,
-        this.applications = {}
+        this.applications = []
     };
 
     save() {
@@ -29,9 +27,23 @@ class Jobs {
             })
     }
 
+    static changeStatus(jobId, userId, status) {
+        const db = getDb();
+        return db.collection('test').updateOne(
+            { $and: [{ _id: ObjectId(jobId), "createdBy": userId }] },
+            { $set: { "status": status } } );
+    }
+
+    static delete(jobId, userId) {
+        const db = getDb();
+        return db.collection('test').updateOne(
+            { $and: [{ _id: ObjectId(jobId), "createdBy": userId }] },
+            { $set: { "isDeleted": true } } );
+    }
+
     static add_bulk_data(data) {
         const db = getDb();
-        return db.collection('jobs').insertMany(data)
+        return db.collection('test').insertMany(data)
             .then(res => {
                 console.log("Added jobs data in bulk");
             })

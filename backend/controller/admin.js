@@ -22,7 +22,7 @@ exports.addBulkJobData = (req, res, next) => {
 //Delete all jobs
 exports.dropJobs = (req, res, next) => {
     const db = getDb();
-    db.collection('jobs').drop()
+    db.collection('test').drop()
         .then(result => {
             res.status(200).send("Dropped all jobs successfully");
         })
