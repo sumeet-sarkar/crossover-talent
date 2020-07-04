@@ -4,6 +4,7 @@ const bodyparser = require('body-parser');
 const authRouter = require('./routes/auth');
 const adminRouter = require('./routes/admin');
 const employeeRouter = require('./routes/employee');
+const employerRouter = require('./routes/employer');
 
 const mongoConnect = require('./util/database').mongoConnect;
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use(authRouter);
 app.use(employeeRouter);
 app.use(adminRouter);
+app.use(employerRouter);
 
 //404 Error Handler
 app.use('/', (req, res, next) => {

@@ -2,9 +2,6 @@ const getDb = require('../util/database').getDb;
 const Application = require('../models/application');
 var ObjectId = require('mongodb').ObjectID;
 
-const Jobs = require('../models/jobs');
-const { application } = require('express');
-
 //Employee Home
 exports.home = (req, res, next) => {
     const pageNo = req.query.pageNo || 1;
@@ -130,6 +127,15 @@ exports.updateBoomarks = (req, res, next) => {
         .catch(err => {
             next(err);
         })
+};
+
+exports.uploadResume = (req, res, next) => {
+    const {originalName, destination, filename} = req.file;
+    try {
+        res.status(200).json(req.file);
+    } catch {
+        res.status(400).send({ message: "Unable to upload file at the moment, please try again" });
+    }
 }
 
 const _queryBuilder = (city, category, minSalary, maxSalary, search) => {

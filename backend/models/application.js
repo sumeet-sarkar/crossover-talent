@@ -38,7 +38,6 @@ class Application {
                     if ( err ) {
                         return reject();
                     } else {
-                        console.log("updated job");
                         return resolve(result);
                     }
                 }

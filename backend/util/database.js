@@ -5,16 +5,15 @@ let _db;
 let _client;
 //iLoveMongodbMyHobbyIsCoding1234
 const mongoConnect = (cb) => {
-    MongoClient.connect('mongodb+srv://kudli:iLoveMongodbMyHobbyIsCoding1234@main-qrwun.mongodb.net/crossover-talent?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+    return MongoClient.connect('mongodb+srv://kudli:iLoveMongodbMyHobbyIsCoding1234@main-qrwun.mongodb.net/crossover-talent?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
         .then(client => {
-            console.log("Connected to MongoDb Atlas");
             _db = client.db();
             _client = client;
             cb();
+            return;
         })
         .catch(err => {
-            console.log(err);
-            throw err;
+            return err;
         })
 };
 
