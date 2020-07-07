@@ -13,29 +13,7 @@ class EmployerJobPosts extends Component {
             show: false,
             index: ""
         },
-        
-        jobs: [
-            {
-                title: "Floor Manager",
-                company: "Facebook",
-                city: "Bengaluru",
-                minSalary: 40000,
-                maxSalary: 50000,
-                status: "Open",
-                description: "description1"
-            },
-            {
-                title: "Floor Manager2",
-                company: "Facebook2",
-                city: "Bengaluru2",
-                minSalary: 400002,
-                maxSalary: 500002,
-                status: "Open2",
-                description: "description2"
-            }
-        ]
-        
-       //jobs: []
+       jobs: []
     }
 
     viewJobPost = (e, index) => {
@@ -128,7 +106,7 @@ class EmployerJobPosts extends Component {
     }
 
     componentDidMount = () => {
-        /*const headers = {
+        const headers = {
 			'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.props.bearerToken}`
 		}
@@ -142,7 +120,7 @@ class EmployerJobPosts extends Component {
             .catch(error => {
                 alert(error)
             })
-            */
+            
     }
 
     render() {
