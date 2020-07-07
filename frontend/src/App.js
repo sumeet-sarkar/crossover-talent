@@ -6,6 +6,7 @@ import LandingPage from './containers/auth/landingPage/LandingPage';
 import SignUp from './containers/auth/signUp/SignUp';
 import JobSeeker from './containers/jobSeeker/JobSeeker';
 import JobSeekerApplications from './containers/jobSeeker/JobSeekerApplications'
+import Employer from './containers/employer/Employer'
 
 class App extends Component {
 
@@ -26,7 +27,7 @@ class App extends Component {
                 <Route path="/signup" exact component={SignUp}/>
                 <Route path="/employee" exact component={JobSeeker}/>
                 <Route path="/employee/my-applications" exact component={JobSeekerApplications}/>
-                <Route path="/employer" exact render={() => <h2>Welcome Employer</h2>}/>
+                <Route path="/employer" exact component={Employer}/>
               </div>
           </BrowserRouter>
         );
