@@ -1,32 +1,74 @@
 const mongoConnect = require('../util/database').mongoConnect;
 const getClient = require('../util/database').getClient;
-const authController = require('../controller/auth');
-const authMiddleware = require('../middleware/verifyAuth');
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { expect } = require('chai');
 
+const authController = require('../controller/auth');
+const employeeController = require('../controller/employee');
+const employerController = require('../controller/employer');
+const Employee = require('../models/employee');
+const authMiddleware = require('../middleware/verifyAuth');
+
 chai.use(chaiHttp);
 
-describe ("Welcome to API testing of Crossover Talent", () => {
-    describe ("User Sign Up", () => {
-        it ("Should not register user when required fields are not provided");
-        it ("Should sign user with valid details");
+let token;
+describe ("Welcome to API testing of Crossover Talent", function() {
+    before (function(done) {
+        mongoConnect(() => { done()} )
     });
-    describe ("User Login", () => {
-        before (function(done) {
-            mongoConnect(() => { done()} )
+    after (function(done) {
+        const client = getClient();
+        Employee.delete({ email: "test@gmail.com", password: "test1234" })
+            .then(res => {
+                client.close();
+                done();
+            })
+    });
+    describe ("Sign up", function() {
+        it ("Should sign in user with valid details", function(done) {
+            const req = {
+                body: {
+                    email: "test@gmail.com",
+                    password: "test1234"
+                }
+            };
+            const res = {
+                message: {},
+                statusCode: 500,
+                status: function(status) {
+                    this.statusCode = status;
+                    return this;
+                },
+                json: function(message) {
+                    this.message = message
+                }
+            };
+            authController.signup(req, res, () => {})
+                .then(res => {
+                    expect(res).to.have.property('statusCode', 200);
+                    done();
+                })
         });
-        after (function(done) {
-            const client = getClient();
-            client.close();
-            done();
+        it ("Should not register when email id is already taken", function(done) {
+            const req = {
+                body: {
+                    email: "test@gmail.com",
+                    password: "test1234"
+                }
+            };
+            authController.signup(req, {}, () => {})
+                .then(res => {
+                    expect(res).to.be.an('error');
+                    done();
+                })
         });
+    });
+    describe ("User Login", function() {
         it ("Should return unauthorized if no user found", function(done) {
             const req = {
                 body: {
-                    email: "test.test@gmail.com",
+                    email: "test-wrong@gmail.com",
                     password: "test"
                 }
             }
@@ -40,8 +82,8 @@ describe ("Welcome to API testing of Crossover Talent", () => {
         it ("Should return invalid credentials when wrong password is used", function(done) {
             const req = {
                 body: {
-                    email: "sudarshan97.kudli@gmail.com",
-                    password: "test"
+                    email: "test@gmail.com",
+                    password: "test-wrong"
                 }
             }
             authController.login(req, {}, () => {})
@@ -54,8 +96,8 @@ describe ("Welcome to API testing of Crossover Talent", () => {
         it ("Should login a valid user", function(done) {
             const req = {
                 body: {
-                    email: "sudarshan97.kudli@gmail.com",
-                    password: "suda1234"
+                    email: "test@gmail.com",
+                    password: "test1234"
                 }
             }
             const res = {
@@ -71,21 +113,52 @@ describe ("Welcome to API testing of Crossover Talent", () => {
             };
             authController.login(req, res, () => {})
                 .then(res => {
+                    token = res.token;
                     expect(res).to.be.an('Object');
                     expect(res).to.have.property('statusCode', 200);
                     done();
                 });
         });
     });
-    describe ("Employee Actions", () => {
-        it ("Should be able to view jobs");
+    describe ("Verify user", function() {
+        it ("Should throw error when auth header is absent", function() {
+            const req = {
+                get: () => {
+                    return null;
+                }
+            };
+            expect(authMiddleware.bind(this, req, {}, () => {})).to.throw("Token Required");
+        });
+    })
+    describe.only ("Employee Actions", function() {
+        it ("Should be able to view jobs", function() {
+            const req = {
+                query: {
+                    pageNo: 1,
+                    itemsPerPage: 20
+                }
+            };
+            const res = {
+                message: {},
+                statusCode: 500,
+                status: function(status) {
+                    this.statusCode = status;
+                    return this;
+                },
+                json: function(message) {
+                    this.message = message;
+                }
+            };
+            employeeController.home(req, res, () => {})
+                .then(res => {
+                    expect(res).to.have.property('statusCode', 200);
+                });
+        });
         it ("Should be able to search jobs");
         it ("Should be able to view jobs with filters");
         it ("Should be able to view individual jobs");
-        it ("Should be able to apply to jobs");
-        it ("Should be able to delete his applications");
-    });
-    describe ("Employer actions");
+    describe ("Employer actions", function() {
         it ("Should be able to accept a request");
         it ("Should be able to reject a request");
+    });
 });

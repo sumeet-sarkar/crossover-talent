@@ -1,51 +1,44 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
 const getDb = require('../util/database').getDb;
 const Employee = require('../models/employee');
+const validators = require('../controller/validators');
 
 //User Sign-up (Incomplete)
-exports.signup = (req, res, next) => {
-    const data = req.body;
-    const password = data.password;
-    const email = data.email;
-    const first_name = data.first_name;
-    const last_name = data.last_name;
+exports.signup = async (req, res, next) => {
     const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        const err = new Error(errors.array()[0]);
-        err.statusCode = 422;
-        throw err;
-    }
-    const db = getDb();
-    db.collection('user').findOne({ email: email })
-        .then(user => {
-            if (!user) {
-                return bcrypt.hash(password, 12)
-            }
+    const { password, email, first_name, last_name } = req.body;
+    try {
+        if (!errors.isEmpty()) {
+            const err = new Error(errors.array());
+            err.statusCode = 422;
+            throw err;
+        };
+        const db = getDb();
+        if (typeof db === 'Error') throw db;
+        //Check if email is taken
+        const user = await db.collection('user').findOne({ email: email })
+        if (user) {
             const error = new Error("Email already exists");
             error.statusCode = 403;
             throw error;
-        })
-        .then(hashedPw => {
-            const employee = new Employee({
-                first_name: first_name,
-                last_name: last_name,
-                email: email,
-                password: hashedPw
-            });
-            return employee.save()
-        })
-        .then(result => {
-            res.status(200).json({ message: "User Created"})
-        })
-        .catch(err => {
-            if (!err.statusCode) {
-                err.statusCode=500;
-            };
-            next(err);
-        })
+        }
+        const hashedPw = await bcrypt.hash(password, 12)
+        const employee = new Employee({
+            first_name: first_name,
+            last_name: last_name,
+            email: email,
+            password: hashedPw
+        });
+        const result = await employee.save();
+        res.status(200).json({ message: "User Created"});
+        return res;
+    } catch(err) {
+        next(err);
+        return err;
+    }
 }
 
 //User Login

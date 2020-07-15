@@ -1,4 +1,5 @@
-const getDb = require('../util/database').getDb; 
+const getDb = require('../util/database').getDb;
+const bcrypt = require('bcryptjs');
 
 class Employee {
     constructor(props) {
@@ -19,6 +20,19 @@ class Employee {
             })
             .catch(err => {
                 console.log(err);
+            })
+    };
+
+    static delete(creds) {
+        const db = getDb();
+        const {email} = creds;
+        return db.collection('user').deleteOne({ email: email })
+            .then(res => {
+                return res;
+            })
+            .catch(err => {
+                console.log(err);
+                return err;
             })
     }
 }
