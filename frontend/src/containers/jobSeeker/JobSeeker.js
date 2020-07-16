@@ -83,8 +83,6 @@ class JobSeeker extends Component {
 		//in either case, we dont want the last character
 		url = url.slice(0,-1)
 
-		console.log("url = ", url)
-
 		axios.get(url, {headers: headers})
 			.then(response => {
 				this.jobsHandler(response.data.jobs)
@@ -192,8 +190,7 @@ class JobSeeker extends Component {
 					category = {event => this.buttonInput(event, "category")}
 					city = {event => this.buttonInput(event, "city")}
 					textInput = {event => this.textInput(event)}
-					applyFilter = {this.applyFilter}
-				/>
+					applyFilter = {this.applyFilter}/>
 				<div className="job_seeker_posts_box">
 					{this.state.jobs.map((job,index) => {
 						return(

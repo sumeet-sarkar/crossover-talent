@@ -10,7 +10,7 @@ exports.home = (req, res, next) => {
     const query = _queryBuilder(city, category, minSalary, maxSalary, search);
     let totalItems;
     const db = getDb();
-    db.collection('jobs').countDocuments(query)
+    return db.collection('jobs').countDocuments(query)
         .then(count => {
             totalItems = count;
             return db.collection('jobs').find(query)
@@ -22,13 +22,15 @@ exports.home = (req, res, next) => {
         })
         .then(jobs => {
             res.status(200).json({totalItems: totalItems, jobs: jobs });
+            return res;
         })
         .catch(err => {
             if (!err.statuCode) {
                 err.statuCode = 500;
             };
             next(err);
-        })
+            return err;
+        });
 };
 
 
@@ -50,9 +52,8 @@ exports.singleJob = (req, res, next) => {
 exports.newApplication = (req, res, next) => {
     //Save ID's of user and job
     const jobId = req.body.jobId;
-    const userId = req.body.userId;
+    const userId = req.id;
     const application = new Application({ userId: userId });
-
     //Check if ID's aren't null
     if (userId && jobId) {
         //Update Job's application field

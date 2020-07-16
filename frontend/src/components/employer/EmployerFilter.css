@@ -1,0 +1,15 @@
+.employer_filter{
+    background-color: red;
+    width:100%;
+    position: absolute;
+    top:70px;
+    padding: 12px;
+    overflow: hidden;
+}
+
+.employer_filter_text{
+    display: inline-block;
+    padding: 16px;
+    margin:4px;
+    overflow: hidden;
+}

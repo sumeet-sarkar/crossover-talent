@@ -87,10 +87,10 @@ class LandingPage extends Component {
 
         if(this.state.bearerToken){
             return <Redirect to={{
-                pathname: "/employee",
+                pathname: "/employer",
                 bearerToken: this.state.bearerToken,
                 user: this.state.user
-            }} />   
+            }} />
         }
 
         return (
